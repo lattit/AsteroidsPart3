@@ -5,6 +5,7 @@ ArrayList <Asteroid> myAsteroid = new ArrayList <Asteroid> ();
 ArrayList <Bullets> shots = new ArrayList <Bullets> ();
 Spaceship bob = new Spaceship();
 Star[] nightSky = new Star[200];
+//int myAsteroidd= 10;
 
 public void setup()
 {
@@ -15,33 +16,65 @@ public void setup()
   for (int i=0; i <=15; i++) {
     myAsteroid.add(new Asteroid());
   }
+  //for (int i=0; i < myAsteroidd; i++) {
+  //  Asteroid myAsteroidd = new Asteroid();
+  // myAsteroid.add(myAsteroidd);
+  //}
+  //for (int i=0; i <=15; i++) {
+  //   shots.add(new Bullets(Spaceship theShip));
+  //  }
 }
 
 public void draw()
 {
   background (0);
+  bob.show();
+  bob.move();
   for (int i = 0; i < nightSky.length; i++) {
     nightSky[i].show();
   }
-  // System.out.println(me.getNum());
-  for (int i = 0; i < myAsteroid.size(); i++) {
+  //System.out.println(me.getNum());
+
+  // for (int i= myAsteroid.size()-1; i>=0; i--) {
+  // Asteroid myAsteroid2= myAsteroid.get(i);
+  // Boolean collided = myAsteroid2.collide();
+  //if (collided) {
+  //  myAsteroid.remove(i);
+  // break;
+  //}
+  // }
+  for (int i =0; i < myAsteroid.size(); i++) {
     myAsteroid.get(i).move();
     myAsteroid.get(i).show();
+    float d = dist((float) bob.getX(), (float)bob.getY(), (float)myAsteroid.get(i).getX(), (float)myAsteroid.get(i).getY());
+    if (d < 10)
+      myAsteroid.remove(i);
+      else {break;}
+    //break;
   }
-  bob.show();
-  ///bob.show();
+ 
+
+
+
+  //for (int i =0; i< myAsteroid.size(); i++) {
+  //myAsteroid.get(i).show();
+  //}
+
   for (int i = 0; i < shots.size(); i++) {
     shots.get(i).move();
     shots.get(i).show();
-  }
-  for (int i =0; i< myAsteroid.size(); i++) {
-    myAsteroid.get(i).move();
-    myAsteroid.get(i).show();
-    float d = dist(bob.getX(), bob.getY(), myAsteroid.get(i).getX(), myAsteroid.get(i).getY());
+    float d = dist((float) bob.getX(), (float)bob.getY(), (float)shots.get(i).getX(), (float)shots.get(i).getY());
     if (d < 10)
-      myAsteroid.remove(i);
+    shots.remove(i);
+    }
+    //  for (int i =0; i< myAsteroid.size(); i++) {
+    //  myAsteroid.get(i).move();
+    //   myAsteroid.get(i).show();
+    //float d = dist((float) bob.getX(), (float)bob.getY(), (float)myAsteroid.get(i).getX(), (float)myAsteroid.get(i).getY());
+    //   if (d < 10)
+    //    myAsteroid.remove(i);
   }
-}
+//}
 
 public void keyPressed() {
   if (key == 'h') {
@@ -58,8 +91,7 @@ public void keyPressed() {
   }
   if (keyCode == RIGHT) {
     bob.myCenterX +=6;
-  }
-  if (key == ' ') {
+  } else if (key == ' ') {
     shots.add(new Bullets(bob));
   }
 }
